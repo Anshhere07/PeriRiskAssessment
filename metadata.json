@@ -1,0 +1,8 @@
+{
+  "name": "Remix: AsphyxiaCalc",
+  "description": "A clinical decision support tool to estimate the probability of perinatal asphyxia based on maternal and fetal risk factors for planned normal delivery.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
