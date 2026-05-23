@@ -7,32 +7,29 @@ export const PERINATAL_ASPHYXIA_MODEL: PerinatalAsphyxiaModel = {
     {
       id: 'maternalAge',
       label: 'Maternal Age',
-      description: 'Age of the mother at time of delivery. Clinical extremes (very young or advanced maternal age) increase neonatal risk.',
+      description: 'Extremes of maternal age are associated with increased risk.',
       icon: User,
       options: [
-        { label: 'Ideal Range (20 - 34 years)', value: 'ideal', weight: 1.0 },
-        { label: 'Adolescent (< 20 years)', value: 'young', weight: 1.3 },
-        { label: 'Advanced Age (35 - 39 years)', value: 'advanced', weight: 1.4 },
-        { label: 'Very Advanced Age (≥ 40 years)', value: 'very_advanced', weight: 1.9 }
+        { label: '< 18 years', value: 'ideal', weight: 1.0 },
+        { label: '18 - 35 years', value: 'young', weight: 1.3 },
+        { label: '> 35 years', value: 'very_advanced', weight: 1.9 }
       ]
     },
     {
       id: 'gestationalMaturity',
       label: 'Gestational Age',
-      description: 'Completed weeks of gestation. Deviation from term (37-41 weeks) correlates with higher rate of asphyxia complications.',
+      description: 'Early preterm and post-term pregnancies are high-risk factors.',
       icon: Calendar,
       options: [
-        { label: 'Term (37 - 41 weeks)', value: 'term', weight: 1.0 },
-        { label: 'Post-term (≥ 42 weeks)', value: 'post_term', weight: 1.6 },
-        { label: 'Late Preterm (34 - 36 weeks)', value: 'late_preterm', weight: 2.1 },
-        { label: 'Moderate Preterm (32 - 33 weeks)', value: 'moderate_preterm', weight: 3.8 },
-        { label: 'Early Preterm (< 32 weeks)', value: 'early_preterm', weight: 7.2 }
+        { label: 'Preterm (<37 weeks)', value: 'term', weight: 1.0 },
+        { label: 'Term (37 - 41 weeks)', value: 'post_term', weight: 1.6 },
+        { label: 'Post-term (>42 weeks)', value: 'late_preterm', weight: 7.2 },
       ]
     },
     {
       id: 'parity',
       label: 'Parity',
-      description: 'Number of prior births. Nulliparous mothers (first delivery) have a statistically higher risk of labor dystocia and asphyxia complications.',
+      description: 'First-time deliveries (nulliparity) often involve longer labor stages.',
       icon: Users,
       options: [
         { label: 'First Delivery', value: 'first', weight: 1.3 },
@@ -42,7 +39,7 @@ export const PERINATAL_ASPHYXIA_MODEL: PerinatalAsphyxiaModel = {
     {
       id: 'amnioticFluid',
       label: 'Amniotic Fluid Appearance',
-      description: 'Consistency of meconium-stained amniotic fluid. Heavy/thick meconium signifies prolonged intrapartum distress.',
+      description: 'Meconium staining is a major indicator of fetal distress.',
       icon: Droplet,
       options: [
         { label: 'Clear / Normal', value: 'clear_normal', weight: 1.0 },
@@ -53,7 +50,7 @@ export const PERINATAL_ASPHYXIA_MODEL: PerinatalAsphyxiaModel = {
     {
       id: 'maternalHypertension',
       label: 'Maternal Hypertension',
-      description: 'Presence of hypertensive disorders, including gestational hypertension or pre-eclampsia, which restrict blood flow.',
+      description: 'Pre-eclampsia significantly increases risk of hypoxia.',
       icon: HeartPulse,
       options: [
         { label: 'Absent', value: 'absent', weight: 1.0 },
@@ -63,7 +60,7 @@ export const PERINATAL_ASPHYXIA_MODEL: PerinatalAsphyxiaModel = {
     {
       id: 'gestationalDiabetes',
       label: 'Gestational Diabetes',
-      description: 'Maternal glucose intolerance during pregnancy, associated with macrosomia and metabolic vulnerabilities.',
+      description: 'Metabolic factors can influence fetal oxygen reserves.',
       icon: Activity,
       options: [
         { label: 'Absent', value: 'absent', weight: 1.0 },
@@ -73,7 +70,7 @@ export const PERINATAL_ASPHYXIA_MODEL: PerinatalAsphyxiaModel = {
     {
       id: 'laborDuration',
       label: 'Labor Duration',
-      description: 'Progression of active labor. A prolonged second stage significantly elevates mechanical stress and fetal hypoxia risk.',
+      description: 'Prolonged second stage (>2h) is a critical factor for asphyxia.',
       icon: Clock,
       options: [
         { label: 'Normal Progress', value: 'normal', weight: 1.0 },
@@ -83,7 +80,7 @@ export const PERINATAL_ASPHYXIA_MODEL: PerinatalAsphyxiaModel = {
     {
       id: 'fetalGrowth',
       label: 'Fetal Growth (IUGR)',
-      description: 'Intrauterine Growth Restriction status. IUGR fetuses have lower placental reserves and tolerate labor contractions poorly.',
+      description: 'Growth restricted fetuses have lower tolerance for labor stress.',
       icon: TrendingDown,
       options: [
         { label: 'Normal Growth', value: 'normal', weight: 1.0 },
