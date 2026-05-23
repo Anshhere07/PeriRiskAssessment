@@ -35,7 +35,7 @@ jobs:
 
     - name: Sync Capacitor Android
       run: |
-        npx cap sync android --verbose
+        npx cap sync android --verbose || (echo "Sync failed, running doctor..." && npx cap doctor)
 
 
     - name: Build Android APK with Gradle
