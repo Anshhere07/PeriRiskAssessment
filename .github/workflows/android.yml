@@ -37,14 +37,21 @@ jobs:
       run: npx cap sync android
 
 
-    - name: Build Android APK with Gradle
+    - name: Build Android App (APK & AAB) with Gradle
       run: |
         cd android
         chmod +x gradlew
         ./gradlew assembleDebug
+        ./gradlew bundleRelease
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:
         name: peririsk-android-apk
         path: android/app/build/outputs/apk/debug/app-debug.apk
+
+    - name: Upload AAB Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: peririsk-android-aab
+        path: android/app/build/outputs/bundle/release/*.aab
