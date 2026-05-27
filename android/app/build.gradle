@@ -18,10 +18,18 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file('peririsk-release.keystore')
-            storePassword 'peririsk2026'
-            keyAlias 'peririsk-key'
-            keyPassword 'peririsk2026'
+            if (file('peririsk-release.keystore').exists()) {
+                storeFile file('peririsk-release.keystore')
+                storePassword 'peririsk2026'
+                keyAlias 'peririsk-key'
+                keyPassword 'peririsk2026'
+            } else {
+                // Fallback to debug configuration in CI/CD environments where keystore is ignored/missing
+                storeFile signingConfigs.debug.storeFile
+                storePassword signingConfigs.debug.storePassword
+                keyAlias signingConfigs.debug.keyAlias
+                keyPassword signingConfigs.debug.keyPassword
+            }
         }
     }
     buildTypes {
