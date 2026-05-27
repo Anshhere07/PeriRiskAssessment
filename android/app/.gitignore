@@ -1,2 +1,8 @@
 /build/*
 !/build/.npmkeep
+jdk-21/
+node_modules/
+dist/
+android/.gradle/
+android/build/
+*.jks

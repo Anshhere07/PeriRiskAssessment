@@ -6,3 +6,10 @@ coverage/
 *.log
 .env*
 !.env.example
+# Android Signing Keys
+*.jks
+*.keystore
+
+# Local JDK and Releases
+jdk-21/
+release/
