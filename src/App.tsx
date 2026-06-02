@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Capacitor } from '@capacitor/core';
 import { Smartphone, X, Download } from 'lucide-react';
@@ -13,13 +13,28 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import SurveyView from './components/SurveyView';
 import ResultView from './components/ResultView';
-import PrivacyPolicyModal from './components/PrivacyPolicyModal';
+import PrivacyPolicyPage from './components/PrivacyPolicyPage';
 
 export default function App() {
   const [selections, setSelections] = useState<Selections>({});
   const [result, setResult] = useState<CalculationResult | null>(null);
   const [step, setStep] = useState(0);
-  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+  const [currentPath, setCurrentPath] = useState(() => window.location.pathname);
+
+  // Sync state with browser back/forward history buttons
+  useEffect(() => {
+    const handlePopState = () => {
+      setCurrentPath(window.location.pathname);
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const navigateTo = (path: string) => {
+    window.history.pushState({}, '', path);
+    setCurrentPath(path);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const [showApkToast, setShowApkToast] = useState(() => {
     try {
@@ -76,32 +91,47 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-natural-bg font-sans text-natural-text overflow-x-hidden selection:bg-natural-primary/20" id="main-container">
-      <div className="max-w-4xl mx-auto px-4 py-8 md:py-12">
-        <Header />
+      <AnimatePresence mode="wait">
+        {currentPath === '/privacy-policy' ? (
+          <PrivacyPolicyPage 
+            key="privacy-policy" 
+            onNavigateHome={() => navigateTo('/')} 
+          />
+        ) : (
+          <motion.div
+            key="home"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="max-w-4xl mx-auto px-4 py-8 md:py-12"
+          >
+            <Header />
 
-        <main className="relative" id="main-content">
-          <AnimatePresence mode="wait">
-            {!result ? (
-              <SurveyView 
-                step={step}
-                totalSteps={totalSteps}
-                currentFactor={currentFactor}
-                onSelect={handleSelect}
-              />
-            ) : (
-              <ResultView 
-                result={result}
-                onReset={reset}
-              />
-            )}
-          </AnimatePresence>
-        </main>
+            <main className="relative" id="main-content">
+              <AnimatePresence mode="wait">
+                {!result ? (
+                  <SurveyView 
+                    step={step}
+                    totalSteps={totalSteps}
+                    currentFactor={currentFactor}
+                    onSelect={handleSelect}
+                  />
+                ) : (
+                  <ResultView 
+                    result={result}
+                    onReset={reset}
+                  />
+                )}
+              </AnimatePresence>
+            </main>
 
-        <Footer onOpenPrivacy={() => setIsPrivacyOpen(true)} />
-      </div>
+            <Footer onOpenPrivacy={() => navigateTo('/privacy-policy')} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <AnimatePresence>
-        {showApkToast && (
+        {showApkToast && currentPath !== '/privacy-policy' && (
           <motion.div
             initial={{ opacity: 0, y: 50, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -150,15 +180,6 @@ export default function App() {
               <X className="w-4 h-4" />
             </button>
           </motion.div>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {isPrivacyOpen && (
-          <PrivacyPolicyModal 
-            isOpen={isPrivacyOpen} 
-            onClose={() => setIsPrivacyOpen(false)} 
-          />
         )}
       </AnimatePresence>
     </div>
