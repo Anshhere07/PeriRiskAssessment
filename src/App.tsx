@@ -13,11 +13,13 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import SurveyView from './components/SurveyView';
 import ResultView from './components/ResultView';
+import PrivacyPolicyModal from './components/PrivacyPolicyModal';
 
 export default function App() {
   const [selections, setSelections] = useState<Selections>({});
   const [result, setResult] = useState<CalculationResult | null>(null);
   const [step, setStep] = useState(0);
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
 
   const [showApkToast, setShowApkToast] = useState(() => {
     try {
@@ -95,7 +97,7 @@ export default function App() {
           </AnimatePresence>
         </main>
 
-        <Footer />
+        <Footer onOpenPrivacy={() => setIsPrivacyOpen(true)} />
       </div>
 
       <AnimatePresence>
@@ -148,6 +150,15 @@ export default function App() {
               <X className="w-4 h-4" />
             </button>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {isPrivacyOpen && (
+          <PrivacyPolicyModal 
+            isOpen={isPrivacyOpen} 
+            onClose={() => setIsPrivacyOpen(false)} 
+          />
         )}
       </AnimatePresence>
     </div>

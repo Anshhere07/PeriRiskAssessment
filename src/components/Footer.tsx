@@ -1,7 +1,11 @@
 import React from 'react';
 import { ShieldAlert } from 'lucide-react';
 
-export default function Footer() {
+interface FooterProps {
+  onOpenPrivacy?: () => void;
+}
+
+export default function Footer({ onOpenPrivacy }: FooterProps) {
   return (
     <footer className="mt-16 border-t border-natural-border pt-8" id="app-footer">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-10">
@@ -23,7 +27,18 @@ export default function Footer() {
       </div>
       <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-natural-muted/60 font-bold uppercase tracking-tighter">
         <p>© 2026 CLINICAL DECISION SUPPORT • PERIRISK V2.4</p>
-        <p className="italic">Data source: Integrated Obstetric Outcomes Repository</p>
+        <div className="flex items-center gap-4">
+          {onOpenPrivacy && (
+            <button 
+              onClick={onOpenPrivacy}
+              className="hover:text-natural-primary transition-colors cursor-pointer font-bold uppercase tracking-tighter"
+            >
+              Privacy Policy
+            </button>
+          )}
+          <span className="text-natural-muted/30">|</span>
+          <p className="italic">Data source: Integrated Obstetric Outcomes Repository</p>
+        </div>
       </div>
     </footer>
   );
